@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Us — Create Your Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f7f9fc 0%, #eef2f7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        .register-card {
+            background: #ffffff;
+            max-width: 520px;
+            width: 100%;
+            padding: 2.5rem 2.25rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s ease;
+        }
+        .register-card:hover {
+            transform: translateY(-2px);
+        }
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .card-header .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #eef6ff;
+            border-radius: 50%;
+            color: #2563eb;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            transition: background 0.2s;
+        }
+        .card-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0b1e33;
+            letter-spacing: -0.02em;
+        }
+        .card-header p {
+            color: #5e6f8d;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+        .card-header p i {
+            color: #2563eb;
+            margin-right: 0.25rem;
+        }
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e2a41;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .form-group label i {
+            color: #2563eb;
+            font-size: 0.85rem;
+            width: 1.1rem;
+        }
+        .form-group .hint {
+            font-size: 0.78rem;
+            color: #7a8aa3;
+            font-weight: 400;
+            margin-top: -0.1rem;
+            padding-left: 1.6rem;
+        }
+        .form-group input {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            background: #fafbfc;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            color: #0b1e33;
+            width: 100%;
+        }
+        .form-group input::placeholder {
+            color: #a5b3cc;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+        }
+        .form-group input.success {
+            border-color: #16a34a;
+            background: #f6fef9;
+        }
+        .form-group input.error {
+            border-color: #dc2626;
+            background: #fef6f6;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper input {
+            padding-right: 3rem;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8a9bb8;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.25rem;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover {
+            color: #2563eb;
+        }
+        .strength-bar {
+            margin-top: 0.35rem;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: background 0.2s;
+            margin-left: 1.6rem;
+        }
+        .strength-bar .fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease, background 0.3s ease;
+            background: #dc2626;
+        }
+        .strength-text {
+            font-size: 0.7rem;
+            color: #7a8aa3;
+            margin-top: 0.2rem;
+            margin-left: 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .terms-group {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-top: 0.1rem;
+        }
+        .terms-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.1rem;
+            accent-color: #2563eb;
+            cursor: pointer;
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+        .terms-group label {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #3d4e6b;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+        .terms-group label a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .terms-group label a:hover {
+            text-decoration: underline;
+        }
+        .btn-submit {
+            margin-top: 0.25rem;
+            padding: 0.85rem 1.5rem;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+        .btn-submit:hover {
+            background: #1d4ed8;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.30);
+        }
+        .btn-submit:active {
+            transform: scale(0.97);
+        }
+        .btn-submit i {
+            font-size: 1rem;
+        }
+        .card-footer {
+            text-align: center;
+            margin-top: 1.75rem;
+            font-size: 0.9rem;
+            color: #5e6f8d;
+            border-top: 1px solid #eef2f7;
+            padding-top: 1.5rem;
+        }
+        .card-footer a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+        .validation-msg {
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-top: 0.15rem;
+            padding-left: 1.6rem;
+            min-height: 1.2rem;
+            transition: color 0.2s;
+        }
+        .validation-msg.success {
+            color: #16a34a;
+        }
+        .validation-msg.error {
+            color: #dc2626;
+        }
+        .validation-msg.hidden {
+            opacity: 0;
+            min-height: 0;
+            margin: 0;
+        }
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 1.75rem 1.25rem;
+                border-radius: 1.5rem;
+            }
+            .card-header h1 {
+                font-size: 1.5rem;
+            }
+            .form-group input {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.9rem;
+            }
+            .btn-submit {
+                font-size: 0.95rem;
+                padding: 0.75rem 1.25rem;
+            }
+        }
+        .emoji-big {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <div class="card-header">
+            <div class="logo">
+                <i class="fas fa-smile"></i>
+            </div>
+            <h1>Hi there! 👋</h1>
+            <p><i class="fas fa-sparkles" style="color:#f59e0b;"></i> We're so glad you're here. Let's get started.</p>
+        </div>
+        <form class="register-form" id="registerForm" novalidate>
+            <div class="form-group">
+                <label for="fullName">
+                    <i class="fas fa-user"></i> What should we call you?
+                </label>
+                <input
+                type="text"
+                id="fullName"
+                placeholder="e.g. Jamie Rivera"
+                required
+                autocomplete="name"
+                />
+                <div class="validation-msg hidden" id="nameMsg"></div>
+                <div class="hint"><i class="fas fa-pencil-alt" style="font-size:0.65rem;"></i> Your full name, so we know who we're chatting with.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Your email address
+                </label>
+                <input
+                type="email"
+                id="email"
+                placeholder="hello@example.com"
+                required
+                autocomplete="email"
+                />
+                <div class="validation-msg hidden" id="emailMsg"></div>
+                <div class="hint"><i class="fas fa-lock" style="font-size:0.65rem;"></i> We'll never share it with anyone else.</div>
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-key"></i> Create a password
+                </label>
+                <div class="password-wrapper">
+                    <input
+                    type="password"
+                    id="password"
+                    placeholder="At least 8 characters"
+                    required
+                    autocomplete="new-password"
+                    minlength="8"
+                    />
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="validation-msg hidden" id="passwordMsg"></div>
+                <div class="strength-bar" id="strengthBar">
+                    <div class="fill" id="strengthFill"></div>
+                </div>
+                <div class="strength-text" id="strengthText">Add a few more characters to make it strong</div>
+                <div class="hint"><i class="fas fa-shield-alt" style="font-size:0.65rem;"></i> Use a mix of letters, numbers, and symbols.</div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">
+                    <i class="fas fa-check-circle"></i> Confirm your password
+                </label>
+                <div class="password-wrapper">
+                    <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Type it again, just to be sure"
+                    required
+                    autocomplete="new-password"
+                    />
+                    <button type="button" class="toggle-password" id="toggleConfirm" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="validation-msg hidden" id="confirmMsg"></div>
+            </div>
+            <div class="form-group terms-group">
+                <input type="checkbox" id="terms" required />
+                <label for="terms">
+                    I agree to the
+                    <a href="#" onclick="return false;">Terms of Service</a>
+                    and
+                    <a href="#" onclick="return false;">Privacy Policy</a>.
+                    <span style="color:#7a8aa3;font-weight:400;"> (It's the friendly thing to do.)</span>
+                </label>
+            </div>
+            <div class="validation-msg hidden" id="termsMsg" style="padding-left:2.2rem;"></div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-rocket"></i> Let's go! &nbsp; <span style="font-weight:400;font-size:0.85rem;">→</span>
+            </button>
+        </form>
+        <div class="card-footer">
+            Already have an account?
+            <a href="#" onclick="return false;">Sign in instead</a>
+            <span style="display:block;font-size:0.75rem;color:#a5b3cc;margin-top:0.4rem;">
+                <i class="fas fa-heart" style="color:#f87171;"></i> We're happy to see you.
+            </span>
+        </div>
+    </div>
+    <script>
+        (function() {
+            'use strict';
+            const form = document.getElementById('registerForm');
+            const fullName = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const terms = document.getElementById('terms');
+            const nameMsg = document.getElementById('nameMsg');
+            const emailMsg = document.getElementById('emailMsg');
+            const passwordMsg = document.getElementById('passwordMsg');
+            const confirmMsg = document.getElementById('confirmMsg');
+            const termsMsg = document.getElementById('termsMsg');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            const togglePassword = document.getElementById('togglePassword');
+            const toggleConfirm = document.getElementById('toggleConfirm');
+
+            function setMsg(el, msg, type) {
+                if (!msg) {
+                    el.classList.add('hidden');
+                    el.textContent = '';
+                    el.className = 'validation-msg hidden';
+                    return;
+                }
+                el.classList.remove('hidden', 'success', 'error');
+                el.textContent = msg;
+                el.classList.add(type);
+            }
+
+            function setInputState(input, state) {
+                input.classList.remove('success', 'error');
+                if (state) input.classList.add(state);
+            }
+
+            function validateName() {
+                const val = fullName.value.trim();
+                if (val.length === 0) {
+                    setMsg(nameMsg, 'Please tell us your name.', 'error');
+                    setInputState(fullName, 'error');
+                    return false;
+                }
+                if (val.length < 2) {
+                    setMsg(nameMsg, 'That seems a bit short — mind using your full name?', 'error');
+                    setInputState(fullName, 'error');
+                    return false;
+                }
+                setMsg(nameMsg, 'Great name!', 'success');
+                setInputState(fullName, 'success');
+                return true;
+            }
+
+            function validateEmail() {
+                const val = email.value.trim();
+                const simpleEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (val.length === 0) {
+                    setMsg(emailMsg, 'We need your email to stay in touch.', 'error');
+                    setInputState(email, 'error');
+                    return false;
+                }
+                if (!simpleEmailRegex.test(val)) {
+                    setMsg(emailMsg, 'Hmm, that doesn\'t look like a valid email address.', 'error');
+                    setInputState(email, 'error');
+                    return false;
+                }
+                setMsg(emailMsg, 'Looks good!', 'success');
+                setInputState(email, 'success');
+                return true;
+            }
+
+            function checkPasswordStrength(pwd) {
+                let score = 0;
+                if (pwd.length >= 8) score++;
+                if (pwd.length >= 12) score++;
+                if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score++;
+                if (/\d/.test(pwd)) score++;
+                if (/[^a-zA-Z0-9]/.test(pwd)) score++;
+                let percent = 0;
+                let label = 'Add a few more characters to make it strong';
+                let color = '#dc2626';
+                if (pwd.length === 0) {
+                    percent = 0;
+                    label = 'Add a few more characters to make it strong';
+                    color = '#dc2626';
+                } else if (score <= 1) {
+                    percent = 25;
+                    label = 'Try adding more characters and variety.';
+                    color = '#dc2626';
+                } else if (score === 2) {
+                    percent = 45;
+                    label = 'Good start — mix in some symbols and numbers.';
+                    color = '#f59e0b';
+                } else if (score === 3) {
+                    percent = 70;
+                    label = 'Getting stronger! Add a few more symbols.';
+                    color = '#f59e0b';
+                } else if (score === 4) {
+                    percent = 90;
+                    label = 'Almost there! Make it a bit longer.';
+                    color = '#16a34a';
+                } else if (score >= 5) {
+                    percent = 100;
+                    label = 'Strong password! You\'re all set. 💪';
+                    color = '#16a34a';
+                }
+                strengthFill.style.width = percent + '%';
+                strengthFill.style.background = color;
+                strengthText.textContent = label;
+                return score;
+            }
+
+            function validatePassword() {
+                const val = password.value;
+                const score = checkPasswordStrength(val);
+                if (val.length === 0) {
+                    setMsg(passwordMsg, 'Please create a password.', 'error');
+                    setInputState(password, 'error');
+                    return false;
+                }
+                if (val.length < 8) {
+                    setMsg(passwordMsg, 'At least 8 characters, please.', 'error');
+                    setInputState(password, 'error');
+                    return false;
+                }
+                if (score < 3) {
+                    setMsg(passwordMsg, 'Try making it stronger with numbers and symbols.', 'error');
+                    setInputState(password, 'error');
+                    return false;
+                }
+                setMsg(passwordMsg, 'Password looks strong!', 'success');
+                setInputState(password, 'success');
+                return true;
+            }
+
+            function validateConfirm() {
+                const pwd = password.value;
+                const conf = confirmPassword.value;
+                if (conf.length === 0) {
+                    setMsg(confirmMsg, 'Please confirm your password.', 'error');
+                    setInputState(confirmPassword, 'error');
+                    return false;
+                }
+                if (pwd !== conf) {
+                    setMsg(confirmMsg, 'These passwords don\'t match. Take another look.', 'error');
+                    setInputState(confirmPassword, 'error');
+                    return false;
+                }
+                setMsg(confirmMsg, 'They match!', 'success');
+                setInputState(confirmPassword, 'success');
+                return true;
+            }
+
+            function validateTerms() {
+                if (!terms.checked) {
+                    setMsg(termsMsg, 'Please agree to the terms to continue.', 'error');
+                    return false;
+                }
+                setMsg(termsMsg, 'Thanks for agreeing!', 'success');
+                return true;
+            }
+
+            fullName.addEventListener('blur', validateName);
+            fullName.addEventListener('input', validateName);
+            email.addEventListener('blur', validateEmail);
+            email.addEventListener('input', validateEmail);
+            password.addEventListener('input', function() {
+                validatePassword();
+                if (confirmPassword.value.length > 0) validateConfirm();
+            });
+            password.addEventListener('blur', validatePassword);
+            confirmPassword.addEventListener('input', validateConfirm);
+            confirmPassword.addEventListener('blur', validateConfirm);
+            terms.addEventListener('change', validateTerms);
+
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+            toggleConfirm.addEventListener('click', function() {
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                const isConfirmValid = validateConfirm();
+                const isTermsValid = validateTerms();
+                if (isNameValid && isEmailValid && isPasswordValid && isConfirmValid && isTermsValid) {
+                    alert('🎉 Welcome aboard! Your account has been created. (This is a demo — no data was sent.)');
+                    form.reset();
+                    document.querySelectorAll('.validation-msg').forEach(el => {
+                        el.classList.add('hidden');
+                        el.textContent = '';
+                    });
+                    document.querySelectorAll('.form-group input').forEach(inp => inp.classList.remove('success', 'error'));
+                    strengthFill.style.width = '0%';
+                    strengthFill.style.background = '#dc2626';
+                    strengthText.textContent = 'Add a few more characters to make it strong';
+                } else {
+                    const firstError = document.querySelector('.form-group input.error, .form-group .validation-msg.error:not(.hidden)');
+                    if (firstError) {
+                        const input = firstError.closest('.form-group')?.querySelector('input');
+                        if (input) input.focus();
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

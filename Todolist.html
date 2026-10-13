@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-group button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .input-group button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+        .actions button.edit-btn {
+            color: #ffc107;
+            border-color: #ffc107;
+        }
+        .actions button.del-btn {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Todo List</h2>
+     
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Enter a task...">
+        <button id="actionBtn" onclick="handleAddOrUpdate()">ADD</button>
+    </div>
+ 
+    <ul id="taskList"> 
+    </ul>
+</div>
+
+<script> 
+    let tasks = [];  
+    let editId = null; 
+
+    const taskInput = document.getElementById('taskInput');
+    const actionBtn = document.getElementById('actionBtn');
+    const taskList = document.getElementById('taskList');
+ 
+    function handleAddOrUpdate() {
+        const text = taskInput.value.trim();
+        if (!text) return;  
+        if (editId !== null) { 
+            tasks = tasks.map(task => 
+                task.id === editId ? { ...task, text: text } : task
+            );
+            editId = null;
+            actionBtn.textContent = 'ADD';
+        } else { 
+            tasks.push({ id: Date.now(), text: text });
+        }
+
+        taskInput.value = '';  
+        renderTasks();
+    }
+ 
+    function renderTasks() {
+        taskList.innerHTML = '';  
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+             
+            const span = document.createElement('span');
+            span.textContent = task.text;
+             
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'actions';
+ 
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'EDIT';
+            editBtn.className = 'edit-btn';
+            editBtn.onclick = () => startEdit(task);
+ 
+            const delBtn = document.createElement('button');
+            delBtn.textContent = 'DEL';
+            delBtn.className = 'del-btn';
+            delBtn.onclick = () => deleteTask(task.id);
+
+            actionsDiv.appendChild(editBtn);
+            actionsDiv.appendChild(delBtn);
+
+            li.appendChild(span);
+            li.appendChild(actionsDiv);
+            taskList.appendChild(li);
+        });
+    }
+ 
+    function deleteTask(id) {
+        tasks = tasks.filter(task => task.id !== id);
+         
+        if (editId === id) {
+            editId = null;
+            taskInput.value = '';
+            actionBtn.textContent = 'ADD';
+        }
+        renderTasks();
+    }
+ 
+    function startEdit(task) {
+        taskInput.value = task.text;
+        editId = task.id;
+        actionBtn.textContent = 'UPDATE';
+        taskInput.focus();  
+    }
+</script>
+
+</body>
+</html>
